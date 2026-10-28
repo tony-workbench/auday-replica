@@ -1,0 +1,104 @@
+# Generate the Xcode project with XcodeGen (https://github.com/yonaskolb/XcodeGen):
+#   xcodegen generate
+# The .xcodeproj is not committed; this file is the source of truth.
+name: AudayReplica
+options:
+  deploymentTarget:
+    iOS: "17.0"
+    watchOS: "10.0"
+  createIntermediateGroups: true
+configFiles:
+  Debug: Config/Base.xcconfig
+  Release: Config/Base.xcconfig
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    CODE_SIGN_STYLE: Automatic
+packages:
+  AudayKit:
+    path: AudayKit
+  # My voice recognition: runs the WeSpeaker speaker model (the Mac's app/speaker.py) on the iPhone.
+  OnnxRuntime:
+    url: https://github.com/microsoft/onnxruntime-swift-package-manager
+    from: 1.20.0
+  # Local accurate: Whisper on the iPhone (Core ML), like Auday's "Local accurate" mode.
+  WhisperKit:
+    url: https://github.com/argmaxinc/WhisperKit
+    from: 0.9.0
+targets:
+  AudayWatch:
+    type: application
+    platform: watchOS
+    sources: [AudayWatch]
+    dependencies:
+      - package: AudayKit
+    info:
+      path: AudayWatch/Info.plist
+      properties:
+        CFBundleDisplayName: Auday Replica
+        WKApplication: true
+        WKCompanionAppBundleIdentifier: $(AUDAY_BUNDLE_PREFIX).phone
+        NSMicrophoneUsageDescription: Records your day in 15-minute fragments for your own Auday Replica on your Mac.
+        NSLocationWhenInUseUsageDescription: While recording, notes roughly where you are every 2 minutes so your replica can name the place (Location data).
+        # Keeps recording after the user leaves the app (Digital Crown, wrist down), and positions
+        # while the screen is off (CLLocationManager.allowsBackgroundLocationUpdates). On watchOS
+        # audio goes in UIBackgroundModes; WKBackgroundModes only takes session types such as
+        # workout-processing, and an "audio" there is silently ignored on the device.
+        UIBackgroundModes: [audio, location]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: $(AUDAY_BUNDLE_PREFIX).phone.watchkitapp
+        TARGETED_DEVICE_FAMILY: "4"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        SKIP_INSTALL: YES
+  AudayPhone:
+    type: application
+    platform: iOS
+    sources: [AudayPhone]
+    dependencies:
+      - package: AudayKit
+      - package: OnnxRuntime
+        product: onnxruntime
+      - package: WhisperKit
+      - target: AudayWatch
+        embed: true
+        copy:
+          destination: productsDirectory
+          subpath: $(CONTENTS_FOLDER_PATH)/Watch
+    info:
+      path: AudayPhone/Info.plist
+      properties:
+        CFBundleDisplayName: Auday Replica
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+        # Plain http to the Mac on the same Wi-Fi only; everything else still needs https.
+        NSAppTransportSecurity:
+          NSAllowsLocalNetworking: true
+        NSLocalNetworkUsageDescription: Lets your Mac find this iPhone and read a copy of your recordings.
+        # Connect to your Mac: this iPhone advertises itself so the Mac's pairing command finds it.
+        NSBonjourServices: [_audayreplica._tcp]
+        NSMicrophoneUsageDescription: Records three short readings so Auday can recognise your voice in your recordings (My voice recognition). The audio stays on this iPhone.
+        NSSpeechRecognitionUsageDescription: Transcribes your watch recordings on this iPhone. The audio never leaves your device.
+        NSHealthShareUsageDescription: Reads heart rate, HRV, steps, sleep and workouts so your replica on your Mac can add body context to your recordings (Body data).
+    entitlements:
+      path: AudayPhone/AudayPhone.entitlements
+      properties:
+        com.apple.developer.healthkit: true
+        com.apple.developer.healthkit.access: []
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: $(AUDAY_BUNDLE_PREFIX).phone
+        TARGETED_DEVICE_FAMILY: "1"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+schemes:
+  AudayPhone:
+    build:
+      targets:
+        AudayPhone: all
+        AudayWatch: all
+  AudayWatch:
+    build:
+      targets:
+        AudayWatch: all

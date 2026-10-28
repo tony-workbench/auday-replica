@@ -1,0 +1,9 @@
+jsonschema>=4.19
+numpy>=1.26
+faster-whisper==1.1.1
+sherpa-onnx==1.12.40
+onnxruntime>=1.20
+requests>=2.31
+certifi>=2024.2.2
+imageio-ffmpeg==0.6.0
+cryptography>=42

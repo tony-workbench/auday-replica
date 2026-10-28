@@ -1,0 +1,6 @@
+// Bundle IDs must be unique to your Apple ID. Put your own values in Config/Local.xcconfig
+// (not committed), e.g.
+//   AUDAY_BUNDLE_PREFIX = com.yourname.auday-replica
+//   DEVELOPMENT_TEAM = ABCDE12345
+AUDAY_BUNDLE_PREFIX = io.github.tony-workbench.auday-replica
+#include? "Local.xcconfig"

@@ -1,0 +1,10 @@
+*.xcodeproj/
+AudayKit/.build/
+AudayKit/.swiftpm/
+build/
+DerivedData/
+Config/Local.xcconfig
+# XcodeGen writes these from project.yml
+AudayWatch/Info.plist
+AudayPhone/Info.plist
+AudayPhone/AudayPhone.entitlements

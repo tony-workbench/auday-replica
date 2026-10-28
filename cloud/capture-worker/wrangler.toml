@@ -1,0 +1,13 @@
+name = "auday-capture"
+main = "src/index.js"
+compatibility_date = "2026-09-01"
+
+[vars]
+UPSTREAM = "https://generativelanguage.googleapis.com"
+
+# Captured requests. No id here: the first `npx wrangler deploy` creates the namespace in your
+# own Cloudflare account and later deploys reuse it.
+[[kv_namespaces]]
+binding = "LOGS"
+
+# Secrets (never in this file): wrangler secret put PROXY_TOKEN / ADMIN_TOKEN

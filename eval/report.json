@@ -1,0 +1,1229 @@
+{
+ "summary": {
+  "prompt_version": "2026-10-24.1",
+  "provider": "replay:blind.json",
+  "scenarios": 19,
+  "complete": 19,
+  "scenarios_all_checks_pass": 19,
+  "final_state_checks": "38/38",
+  "extraction_recall": 1.0,
+  "extraction_miss_rate": 0.0,
+  "extraction_precision_vs_gold": 1.0,
+  "false_extraction_rate": 0.0,
+  "unexpected_extractions": 0,
+  "duplicate_rate": 0.0,
+  "conflict_handling_accuracy": 1.0,
+  "source_traceability": 1.0,
+  "guard_interventions": 0,
+  "extraction_failures": 0,
+  "usage": {
+   "calls": 33,
+   "input_tokens": 30909,
+   "output_tokens": 3019,
+   "estimated": true
+  }
+ },
+ "scenarios": [
+  {
+   "checks": [
+    {
+     "pattern": "年糕",
+     "status_in": [
+      "saved",
+      "confirmed"
+     ],
+     "count": 1,
+     "ok": true,
+     "hits": [
+      "mem_00001[saved] 用户的猫叫年糕，三岁了"
+     ]
+    },
+    {
+     "cite": [
+      "s01-t1"
+     ],
+     "pattern": "年糕",
+     "ok": true,
+     "hits": [
+      "mem_00001 ['s01-t1']"
+     ]
+    }
+   ],
+   "required": 1,
+   "found": 1,
+   "accepted": 1,
+   "matched": 1,
+   "false_extractions": 0,
+   "unexpected": [],
+   "dup_violations": 0,
+   "dup_checks": 0,
+   "trace_ok": 1,
+   "trace_total": 1,
+   "id": "01_new_fact_pet",
+   "covers": [
+    "new_fact"
+   ],
+   "complete": true,
+   "decisions": [
+    {
+     "record": "s01-t1",
+     "op": "ADD",
+     "proposed": "ADD",
+     "guard": null,
+     "memory_id": "mem_00001",
+     "target_id": null
+    }
+   ],
+   "errors": [],
+   "dropped": {},
+   "usage": {
+    "calls": 1,
+    "input_tokens": 1068,
+    "output_tokens": 97,
+    "estimated": true
+   },
+   "final": [
+    "mem_00001[saved] pet.cat.name: 用户的猫叫年糕，三岁了 <- ['s01-t1']"
+   ]
+  },
+  {
+   "checks": [
+    {
+     "pattern": "(?i)oat|燕麦",
+     "status_in": [
+      "saved",
+      "confirmed"
+     ],
+     "count": 1,
+     "ok": true,
+     "hits": [
+      "mem_00001[saved] The user always has an oat milk latte in the morning"
+     ]
+    },
+    {
+     "cite": [
+      "s02-t1"
+     ],
+     "pattern": "(?i)oat|燕麦",
+     "ok": true,
+     "hits": [
+      "mem_00001 ['s02-t1', 's02-t2']"
+     ]
+    }
+   ],
+   "required": 1,
+   "found": 1,
+   "accepted": 2,
+   "matched": 2,
+   "false_extractions": 0,
+   "unexpected": [],
+   "dup_violations": 0,
+   "dup_checks": 1,
+   "trace_ok": 2,
+   "trace_total": 2,
+   "id": "02_duplicate_cross_language",
+   "covers": [
+    "duplicate",
+    "multilingual"
+   ],
+   "complete": true,
+   "decisions": [
+    {
+     "record": "s02-t1",
+     "op": "ADD",
+     "proposed": "ADD",
+     "guard": null,
+     "memory_id": "mem_00001",
+     "target_id": null
+    },
+    {
+     "record": "s02-t2",
+     "op": "NOOP",
+     "proposed": "NOOP",
+     "guard": null,
+     "memory_id": "mem_00001",
+     "target_id": "mem_00001"
+    }
+   ],
+   "errors": [],
+   "dropped": {},
+   "usage": {
+    "calls": 3,
+    "input_tokens": 2645,
+    "output_tokens": 253,
+    "estimated": true
+   },
+   "final": [
+    "mem_00001[saved] preference.drink.morning: The user always has an oat milk latte in the morning <- ['s02-t1', 's02-t2']"
+   ]
+  },
+  {
+   "checks": [
+    {
+     "pattern": "(?i)auday|记忆系统",
+     "status_in": [
+      "saved",
+      "confirmed"
+     ],
+     "count": 1,
+     "ok": true,
+     "hits": [
+      "mem_00001[saved] 用户正在做一个个人项目，想复刻 Auday 的长期记忆系统，并决定用 Python 加 SQLite 来写"
+     ]
+    },
+    {
+     "pattern": "(?i)python|sqlite",
+     "status_in": [
+      "saved",
+      "confirmed"
+     ],
+     "count": 1,
+     "ok": true,
+     "hits": [
+      "mem_00001[saved] 用户正在做一个个人项目，想复刻 Auday 的长期记忆系统，并决定用 Python 加 SQLite 来写"
+     ]
+    },
+    {
+     "pattern": "(?i)^(?=.*(auday|记忆))(?!.*(python|sqlite))",
+     "status_in": [
+      "saved",
+      "confirmed"
+     ],
+     "count": 0,
+     "ok": true,
+     "hits": []
+    }
+   ],
+   "required": 2,
+   "found": 2,
+   "accepted": 2,
+   "matched": 2,
+   "false_extractions": 0,
+   "unexpected": [],
+   "dup_violations": 0,
+   "dup_checks": 1,
+   "trace_ok": 2,
+   "trace_total": 2,
+   "id": "03_supplement_merge",
+   "covers": [
+    "supplement"
+   ],
+   "complete": true,
+   "decisions": [
+    {
+     "record": "s03-t1",
+     "op": "ADD",
+     "proposed": "ADD",
+     "guard": null,
+     "memory_id": "mem_00001",
+     "target_id": null
+    },
+    {
+     "record": "s03-t2",
+     "op": "MERGE",
+     "proposed": "MERGE",
+     "guard": null,
+     "memory_id": "mem_00001",
+     "target_id": "mem_00001"
+    }
+   ],
+   "errors": [],
+   "dropped": {},
+   "usage": {
+    "calls": 3,
+    "input_tokens": 2672,
+    "output_tokens": 313,
+    "estimated": true
+   },
+   "final": [
+    "mem_00001[saved] project.memory_system: 用户正在做一个个人项目，想复刻 Auday 的长期记忆系统，并决定用 Python 加 SQLite 来写 <- ['s03-t1', 's03-t2']"
+   ]
+  },
+  {
+   "checks": [
+    {
+     "pattern": "周五",
+     "status_in": [
+      "saved",
+      "confirmed"
+     ],
+     "count": 1,
+     "ok": true,
+     "hits": [
+      "mem_00001[saved] 用户每周五打羽毛球"
+     ]
+    },
+    {
+     "pattern": "^(?!.*(以前|曾|原来|改)).*周三",
+     "status_in": [
+      "saved",
+      "confirmed"
+     ],
+     "count": 0,
+     "ok": true,
+     "hits": []
+    },
+    {
+     "pattern": "(?i)hackathon",
+     "status_in": [
+      "saved",
+      "confirmed",
+      "candidate"
+     ],
+     "count": 1,
+     "ok": true,
+     "hits": [
+      "mem_00002[saved] 用户准备在2026年10月参加一个 Hackathon"
+     ]
+    }
+   ],
+   "required": 2,
+   "found": 2,
+   "accepted": 2,
+   "matched": 2,
+   "false_extractions": 0,
+   "unexpected": [],
+   "dup_violations": 0,
+   "dup_checks": 0,
+   "trace_ok": 2,
+   "trace_total": 2,
+   "id": "04_change_within_session",
+   "covers": [
+    "preference_change",
+    "plan"
+   ],
+   "complete": true,
+   "decisions": [
+    {
+     "record": "s04-t1",
+     "op": "ADD",
+     "proposed": "ADD",
+     "guard": null,
+     "memory_id": "mem_00001",
+     "target_id": null
+    },
+    {
+     "record": "s04-t1",
+     "op": "ADD",
+     "proposed": "ADD",
+     "guard": null,
+     "memory_id": "mem_00002",
+     "target_id": null
+    }
+   ],
+   "errors": [],
+   "dropped": {},
+   "usage": {
+    "calls": 1,
+    "input_tokens": 1076,
+    "output_tokens": 199,
+    "estimated": true
+   },
+   "final": [
+    "mem_00001[saved] routine.badminton.schedule: 用户每周五打羽毛球 <- ['s04-t1']",
+    "mem_00002[saved] plan.hackathon: 用户准备在2026年10月参加一个 Hackathon <- ['s04-t1']"
+   ]
+  },
+  {
+   "checks": [
+    {
+     "pattern": "过道",
+     "status_in": [
+      "saved",
+      "confirmed"
+     ],
+     "count": 1,
+     "ok": true,
+     "hits": [
+      "mem_00002[saved] 用户坐飞机更喜欢靠过道的座位"
+     ]
+    },
+    {
+     "pattern": "^(?!.*过道).*靠窗",
+     "status_in": [
+      "saved",
+      "confirmed"
+     ],
+     "count": 0,
+     "ok": true,
+     "hits": []
+    },
+    {
+     "pattern": "^(?!.*过道).*靠窗",
+     "status_in": [
+      "superseded"
+     ],
+     "count": 1,
+     "ok": true,
+     "hits": [
+      "mem_00001[superseded] 用户坐飞机一般选靠窗的座位"
+     ]
+    }
+   ],
+   "required": 2,
+   "found": 2,
+   "accepted": 2,
+   "matched": 2,
+   "false_extractions": 0,
+   "unexpected": [],
+   "dup_violations": 0,
+   "dup_checks": 0,
+   "trace_ok": 2,
+   "trace_total": 2,
+   "id": "05_change_across_sessions",
+   "covers": [
+    "preference_change",
+    "conflict"
+   ],
+   "complete": true,
+   "decisions": [
+    {
+     "record": "s05-t1",
+     "op": "ADD",
+     "proposed": "ADD",
+     "guard": null,
+     "memory_id": "mem_00001",
+     "target_id": null
+    },
+    {
+     "record": "s05-t2",
+     "op": "SUPERSEDE",
+     "proposed": "SUPERSEDE",
+     "guard": null,
+     "memory_id": "mem_00002",
+     "target_id": "mem_00001"
+    }
+   ],
+   "errors": [],
+   "dropped": {},
+   "usage": {
+    "calls": 3,
+    "input_tokens": 2655,
+    "output_tokens": 264,
+    "estimated": true
+   },
+   "final": [
+    "mem_00001[superseded] preference.flight_seat: 用户坐飞机一般选靠窗的座位 <- ['s05-t1']",
+    "mem_00002[saved] preference.flight_seat: 用户坐飞机更喜欢靠过道的座位 <- ['s05-t2']"
+   ]
+  },
+  {
+   "checks": [
+    {
+     "pattern": "牙医",
+     "status_in": [
+      "saved",
+      "confirmed",
+      "candidate"
+     ],
+     "count": 0,
+     "ok": true,
+     "hits": []
+    },
+    {
+     "pattern": "牙医",
+     "status_in": [
+      "inactive"
+     ],
+     "count": 1,
+     "ok": true,
+     "hits": [
+      "mem_00001[inactive] 用户2026年9月8日下午要去看牙医，不希望安排其他事"
+     ]
+    }
+   ],
+   "required": 1,
+   "found": 1,
+   "accepted": 1,
+   "matched": 1,
+   "false_extractions": 0,
+   "unexpected": [],
+   "dup_violations": 0,
+   "dup_checks": 0,
+   "trace_ok": 1,
+   "trace_total": 1,
+   "id": "06_plan_expiry",
+   "covers": [
+    "temporary_plan"
+   ],
+   "complete": true,
+   "decisions": [
+    {
+     "record": "s06-t1",
+     "op": "ADD",
+     "proposed": "ADD",
+     "guard": null,
+     "memory_id": "mem_00001",
+     "target_id": null
+    }
+   ],
+   "errors": [],
+   "dropped": {},
+   "usage": {
+    "calls": 1,
+    "input_tokens": 1063,
+    "output_tokens": 112,
+    "estimated": true
+   },
+   "final": [
+    "mem_00001[inactive] plan.dentist_appointment: 用户2026年9月8日下午要去看牙医，不希望安排其他事 <- ['s06-t1']"
+   ]
+  },
+  {
+   "checks": [
+    {
+     "pattern": "不喝咖啡|(?i)doesn't drink coffee",
+     "status_in": [
+      "saved",
+      "confirmed"
+     ],
+     "count": 0,
+     "ok": true,
+     "hits": []
+    }
+   ],
+   "required": 0,
+   "found": 0,
+   "accepted": 1,
+   "matched": 1,
+   "false_extractions": 0,
+   "unexpected": [],
+   "dup_violations": 0,
+   "dup_checks": 0,
+   "trace_ok": 1,
+   "trace_total": 1,
+   "id": "07_self_contradiction",
+   "covers": [
+    "contradiction"
+   ],
+   "complete": true,
+   "decisions": [
+    {
+     "record": "s07-t1",
+     "op": "ADD",
+     "proposed": "ADD",
+     "guard": null,
+     "memory_id": "mem_00001",
+     "target_id": null
+    }
+   ],
+   "errors": [],
+   "dropped": {},
+   "usage": {
+    "calls": 1,
+    "input_tokens": 1091,
+    "output_tokens": 122,
+    "estimated": true
+   },
+   "final": [
+    "mem_00001[candidate] routine.coffee.morning: 用户每天早上会喝一杯美式 <- ['s07-t1']"
+   ]
+  },
+  {
+   "checks": [
+    {
+     "pattern": "陆家嘴|柯基|豆豆|搬去上海|搬到上海",
+     "status_in": [
+      "saved",
+      "confirmed"
+     ],
+     "count": 0,
+     "ok": true,
+     "hits": []
+    }
+   ],
+   "required": 0,
+   "found": 0,
+   "accepted": 1,
+   "matched": 1,
+   "false_extractions": 0,
+   "unexpected": [],
+   "dup_violations": 0,
+   "dup_checks": 0,
+   "trace_ok": 1,
+   "trace_total": 1,
+   "id": "08_other_person",
+   "covers": [
+    "other_person"
+   ],
+   "complete": true,
+   "decisions": [
+    {
+     "record": "s08-t1",
+     "op": "ADD",
+     "proposed": "ADD",
+     "guard": null,
+     "memory_id": "mem_00001",
+     "target_id": null
+    }
+   ],
+   "errors": [],
+   "dropped": {},
+   "usage": {
+    "calls": 1,
+    "input_tokens": 1098,
+    "output_tokens": 153,
+    "estimated": true
+   },
+   "final": [
+    "mem_00001[saved] relationship.sister.studies: 用户的妹妹在上海读医学院 <- ['s08-t1']"
+   ]
+  },
+  {
+   "checks": [
+    {
+     "pattern": "热爱跑步|喜欢跑步|跑步爱好者|经常跑步|习惯跑步|(?i)runner|enjoys running|loves running",
+     "status_in": [
+      "saved",
+      "confirmed"
+     ],
+     "count": 0,
+     "ok": true,
+     "hits": []
+    }
+   ],
+   "required": 0,
+   "found": 0,
+   "accepted": 0,
+   "matched": 0,
+   "false_extractions": 0,
+   "unexpected": [],
+   "dup_violations": 0,
+   "dup_checks": 0,
+   "trace_ok": 0,
+   "trace_total": 0,
+   "id": "09_ai_inference",
+   "covers": [
+    "ai_inference"
+   ],
+   "complete": true,
+   "decisions": [],
+   "errors": [],
+   "dropped": {},
+   "usage": {
+    "calls": 1,
+    "input_tokens": 1058,
+    "output_tokens": 32,
+    "estimated": true
+   },
+   "final": []
+  },
+  {
+   "checks": [
+    {
+     "pattern": "喜欢排队",
+     "status_in": [
+      "saved",
+      "confirmed"
+     ],
+     "count": 0,
+     "ok": true,
+     "hits": []
+    },
+    {
+     "pattern": "不吃香菜|不.{0,4}香菜",
+     "status_in": [
+      "saved",
+      "confirmed"
+     ],
+     "count": 1,
+     "ok": true,
+     "hits": [
+      "mem_00001[saved] 用户不吃香菜"
+     ]
+    },
+    {
+     "pattern": "^(?!.*不).*(喜欢|爱吃).*香菜",
+     "status_in": [
+      "saved",
+      "confirmed"
+     ],
+     "count": 0,
+     "ok": true,
+     "hits": []
+    }
+   ],
+   "required": 1,
+   "found": 1,
+   "accepted": 1,
+   "matched": 1,
+   "false_extractions": 0,
+   "unexpected": [],
+   "dup_violations": 0,
+   "dup_checks": 0,
+   "trace_ok": 1,
+   "trace_total": 1,
+   "id": "10_sarcasm_negation",
+   "covers": [
+    "sarcasm",
+    "negation"
+   ],
+   "complete": true,
+   "decisions": [
+    {
+     "record": "s10-t1",
+     "op": "ADD",
+     "proposed": "ADD",
+     "guard": null,
+     "memory_id": "mem_00001",
+     "target_id": null
+    }
+   ],
+   "errors": [],
+   "dropped": {},
+   "usage": {
+    "calls": 1,
+    "input_tokens": 1079,
+    "output_tokens": 114,
+    "estimated": true
+   },
+   "final": [
+    "mem_00001[saved] constraint.food.cilantro: 用户不吃香菜 <- ['s10-t1']"
+   ]
+  },
+  {
+   "checks": [
+    {
+     "pattern": "(?i)zed",
+     "status_in": [
+      "saved",
+      "confirmed"
+     ],
+     "count": 1,
+     "ok": true,
+     "hits": [
+      "mem_00002[saved] 用户的主力编辑器是 Zed"
+     ]
+    },
+    {
+     "pattern": "(?i)^(?!.*(zed|不用|no longer|stopped)).*neovim",
+     "status_in": [
+      "saved",
+      "confirmed"
+     ],
+     "count": 0,
+     "ok": true,
+     "hits": []
+    },
+    {
+     "pattern": "(?i)neovim",
+     "status_in": [
+      "superseded"
+     ],
+     "count": 1,
+     "ok": true,
+     "hits": [
+      "mem_00001[superseded] The user's main code editor is Neovim"
+     ]
+    }
+   ],
+   "required": 2,
+   "found": 2,
+   "accepted": 2,
+   "matched": 2,
+   "false_extractions": 0,
+   "unexpected": [],
+   "dup_violations": 0,
+   "dup_checks": 0,
+   "trace_ok": 2,
+   "trace_total": 2,
+   "id": "11_multilingual_supersede",
+   "covers": [
+    "multilingual",
+    "preference_change"
+   ],
+   "complete": true,
+   "decisions": [
+    {
+     "record": "s11-t1",
+     "op": "ADD",
+     "proposed": "ADD",
+     "guard": null,
+     "memory_id": "mem_00001",
+     "target_id": null
+    },
+    {
+     "record": "s11-t2",
+     "op": "SUPERSEDE",
+     "proposed": "SUPERSEDE",
+     "guard": null,
+     "memory_id": "mem_00002",
+     "target_id": "mem_00001"
+    }
+   ],
+   "errors": [],
+   "dropped": {},
+   "usage": {
+    "calls": 3,
+    "input_tokens": 2639,
+    "output_tokens": 239,
+    "estimated": true
+   },
+   "final": [
+    "mem_00001[superseded] preference.editor: The user's main code editor is Neovim <- ['s11-t1']",
+    "mem_00002[saved] preference.editor: 用户的主力编辑器是 Zed <- ['s11-t2']"
+   ]
+  },
+  {
+   "checks": [
+    {
+     "pattern": "腾讯",
+     "status_in": [
+      "saved",
+      "confirmed"
+     ],
+     "count": 1,
+     "ok": true,
+     "hits": [
+      "mem_00002[saved] 用户从2026年9月1日起入职腾讯，做推荐算法"
+     ]
+    },
+    {
+     "pattern": "^(?!.*(曾|过|结束|以前|此前|腾讯)).*字节",
+     "status_in": [
+      "saved",
+      "confirmed"
+     ],
+     "count": 0,
+     "ok": true,
+     "hits": []
+    }
+   ],
+   "required": 2,
+   "found": 2,
+   "accepted": 3,
+   "matched": 3,
+   "false_extractions": 0,
+   "unexpected": [],
+   "dup_violations": 0,
+   "dup_checks": 0,
+   "trace_ok": 3,
+   "trace_total": 3,
+   "id": "12_job_chain",
+   "covers": [
+    "cross_session_update"
+   ],
+   "complete": true,
+   "decisions": [
+    {
+     "record": "s12-t1",
+     "op": "ADD",
+     "proposed": "ADD",
+     "guard": null,
+     "memory_id": "mem_00001",
+     "target_id": null
+    },
+    {
+     "record": "s12-t2",
+     "op": "SUPERSEDE",
+     "proposed": "SUPERSEDE",
+     "guard": null,
+     "memory_id": "mem_00002",
+     "target_id": "mem_00001"
+    },
+    {
+     "record": "s12-t3",
+     "op": "NOOP",
+     "proposed": "NOOP",
+     "guard": null,
+     "memory_id": "mem_00002",
+     "target_id": "mem_00002"
+    }
+   ],
+   "errors": [],
+   "dropped": {},
+   "usage": {
+    "calls": 5,
+    "input_tokens": 4233,
+    "output_tokens": 418,
+    "estimated": true
+   },
+   "final": [
+    "mem_00001[superseded] work.employer: 用户在字节跳动做后端实习 <- ['s12-t1']",
+    "mem_00002[saved] work.employer: 用户从2026年9月1日起入职腾讯，做推荐算法 <- ['s12-t2', 's12-t3']"
+   ]
+  },
+  {
+   "checks": [
+    {
+     "pattern": "^(?!.*(不|好了|可能|没)).*花生过敏",
+     "status_in": [
+      "confirmed"
+     ],
+     "count": 1,
+     "ok": true,
+     "hits": [
+      "mem_00001[confirmed] 用户对花生过敏"
+     ]
+    },
+    {
+     "pattern": "不再.*过敏|过敏.*好了|(?i)no longer allergic",
+     "status_in": [
+      "saved",
+      "confirmed"
+     ],
+     "count": 0,
+     "ok": true,
+     "hits": []
+    }
+   ],
+   "required": 0,
+   "found": 0,
+   "accepted": 0,
+   "matched": 0,
+   "false_extractions": 0,
+   "unexpected": [],
+   "dup_violations": 0,
+   "dup_checks": 0,
+   "trace_ok": 0,
+   "trace_total": 0,
+   "id": "13_confirmed_protection",
+   "covers": [
+    "conflict",
+    "confirmed_protection"
+   ],
+   "complete": true,
+   "decisions": [],
+   "errors": [],
+   "dropped": {},
+   "usage": {
+    "calls": 1,
+    "input_tokens": 1076,
+    "output_tokens": 58,
+    "estimated": true
+   },
+   "final": [
+    "mem_00001[confirmed] constraint.allergy.peanut: 用户对花生过敏 <- ['seed-t0']"
+   ]
+  },
+  {
+   "checks": [
+    {
+     "pattern": "奶茶",
+     "status_in": [
+      "saved",
+      "confirmed"
+     ],
+     "count": 0,
+     "ok": true,
+     "hits": []
+    },
+    {
+     "pattern": "奶茶",
+     "status_in": [
+      "rejected"
+     ],
+     "count": 1,
+     "ok": true,
+     "hits": [
+      "mem_00001[rejected] 用户喜欢喝奶茶"
+     ]
+    }
+   ],
+   "required": 0,
+   "found": 0,
+   "accepted": 1,
+   "matched": 1,
+   "false_extractions": 0,
+   "unexpected": [],
+   "dup_violations": 0,
+   "dup_checks": 0,
+   "trace_ok": 0,
+   "trace_total": 0,
+   "id": "14_rejected_respect",
+   "covers": [
+    "rejected_respect"
+   ],
+   "complete": true,
+   "decisions": [
+    {
+     "record": "s14-t1",
+     "op": "NOOP",
+     "proposed": "NOOP",
+     "guard": null,
+     "memory_id": "mem_00001",
+     "target_id": "mem_00001"
+    }
+   ],
+   "errors": [],
+   "dropped": {},
+   "usage": {
+    "calls": 2,
+    "input_tokens": 1575,
+    "output_tokens": 138,
+    "estimated": true
+   },
+   "final": [
+    "mem_00001[rejected] preference.drink.milk_tea: 用户喜欢喝奶茶 <- ['seed-t0']"
+   ]
+  },
+  {
+   "checks": [
+    {
+     "pattern": "密码|123456|(?i)rejected|指令",
+     "status_in": [
+      "saved",
+      "confirmed",
+      "candidate"
+     ],
+     "count": 0,
+     "ok": true,
+     "hits": []
+    },
+    {
+     "pattern": "年糕",
+     "status_in": [
+      "saved"
+     ],
+     "count": 1,
+     "ok": true,
+     "hits": [
+      "mem_00001[saved] 用户的猫叫年糕"
+     ]
+    }
+   ],
+   "required": 0,
+   "found": 0,
+   "accepted": 0,
+   "matched": 0,
+   "false_extractions": 0,
+   "unexpected": [],
+   "dup_violations": 0,
+   "dup_checks": 0,
+   "trace_ok": 0,
+   "trace_total": 0,
+   "id": "15_prompt_injection",
+   "covers": [
+    "injection",
+    "other_person"
+   ],
+   "complete": true,
+   "decisions": [],
+   "errors": [],
+   "dropped": {},
+   "usage": {
+    "calls": 1,
+    "input_tokens": 1092,
+    "output_tokens": 68,
+    "estimated": true
+   },
+   "final": [
+    "mem_00001[saved] pet.cat.name: 用户的猫叫年糕 <- ['seed-t0']"
+   ]
+  },
+  {
+   "checks": [
+    {
+     "pattern": "猫毛|过敏",
+     "status_in": [
+      "saved",
+      "confirmed"
+     ],
+     "count": 0,
+     "ok": true,
+     "hits": []
+    }
+   ],
+   "required": 0,
+   "found": 0,
+   "accepted": 1,
+   "matched": 1,
+   "false_extractions": 0,
+   "unexpected": [],
+   "dup_violations": 0,
+   "dup_checks": 0,
+   "trace_ok": 1,
+   "trace_total": 1,
+   "id": "16_unknown_speaker",
+   "covers": [
+    "attribution"
+   ],
+   "complete": true,
+   "decisions": [
+    {
+     "record": "s16-t1",
+     "op": "ADD",
+     "proposed": "ADD",
+     "guard": null,
+     "memory_id": "mem_00001",
+     "target_id": null
+    }
+   ],
+   "errors": [],
+   "dropped": {},
+   "usage": {
+    "calls": 1,
+    "input_tokens": 1062,
+    "output_tokens": 106,
+    "estimated": true
+   },
+   "final": [
+    "mem_00001[candidate] constraint.allergy.cat_hair: 用户对猫毛过敏，所以家里不养猫 <- ['s16-t1']"
+   ]
+  },
+  {
+   "checks": [
+    {
+     "pattern": "(?i)mba",
+     "status_in": [
+      "saved",
+      "confirmed"
+     ],
+     "count": 0,
+     "ok": true,
+     "hits": []
+    }
+   ],
+   "required": 0,
+   "found": 0,
+   "accepted": 0,
+   "matched": 0,
+   "false_extractions": 0,
+   "unexpected": [],
+   "dup_violations": 0,
+   "dup_checks": 0,
+   "trace_ok": 0,
+   "trace_total": 0,
+   "id": "17_tentative_plan",
+   "covers": [
+    "uncertainty"
+   ],
+   "complete": true,
+   "decisions": [],
+   "errors": [],
+   "dropped": {},
+   "usage": {
+    "calls": 1,
+    "input_tokens": 1061,
+    "output_tokens": 34,
+    "estimated": true
+   },
+   "final": []
+  },
+  {
+   "checks": [
+    {
+     "pattern": "周一",
+     "status_in": [
+      "saved",
+      "confirmed"
+     ],
+     "count": 1,
+     "ok": true,
+     "hits": [
+      "mem_00001[saved] 用户习惯每周一早上做一次周复盘，回顾上周的事"
+     ]
+    },
+    {
+     "pattern": "周一",
+     "status_in": [
+      "candidate"
+     ],
+     "count": 0,
+     "ok": true,
+     "hits": []
+    },
+    {
+     "cite": [
+      "s18-t1"
+     ],
+     "pattern": "周一",
+     "ok": true,
+     "hits": [
+      "mem_00001 ['transcript-001', 's18-t1']"
+     ]
+    }
+   ],
+   "required": 1,
+   "found": 1,
+   "accepted": 1,
+   "matched": 1,
+   "false_extractions": 0,
+   "unexpected": [],
+   "dup_violations": 0,
+   "dup_checks": 1,
+   "trace_ok": 1,
+   "trace_total": 1,
+   "id": "18_candidate_corroborated",
+   "covers": [
+    "duplicate",
+    "candidate_promotion"
+   ],
+   "complete": true,
+   "decisions": [
+    {
+     "record": "s18-t1",
+     "op": "MERGE",
+     "proposed": "MERGE",
+     "guard": null,
+     "memory_id": "mem_00001",
+     "target_id": "mem_00001"
+    }
+   ],
+   "errors": [],
+   "dropped": {},
+   "usage": {
+    "calls": 2,
+    "input_tokens": 1592,
+    "output_tokens": 182,
+    "estimated": true
+   },
+   "final": [
+    "mem_00001[saved] preference.weekly_review.day: 用户习惯每周一早上做一次周复盘，回顾上周的事 <- ['transcript-001', 's18-t1']"
+   ]
+  },
+  {
+   "checks": [
+    {
+     "pattern": "辛|(?i)spicy",
+     "status_in": [
+      "saved",
+      "confirmed"
+     ],
+     "count": 1,
+     "ok": true,
+     "hits": [
+      "mem_00001[saved] ユーザーは辛い食べ物が苦手で、甘口を好む"
+     ]
+    }
+   ],
+   "required": 1,
+   "found": 1,
+   "accepted": 1,
+   "matched": 1,
+   "false_extractions": 0,
+   "unexpected": [],
+   "dup_violations": 0,
+   "dup_checks": 0,
+   "trace_ok": 1,
+   "trace_total": 1,
+   "id": "19_japanese_fact",
+   "covers": [
+    "multilingual",
+    "new_fact"
+   ],
+   "complete": true,
+   "decisions": [
+    {
+     "record": "s19-t1",
+     "op": "ADD",
+     "proposed": "ADD",
+     "guard": null,
+     "memory_id": "mem_00001",
+     "target_id": null
+    }
+   ],
+   "errors": [],
+   "dropped": {},
+   "usage": {
+    "calls": 1,
+    "input_tokens": 1074,
+    "output_tokens": 117,
+    "estimated": true
+   },
+   "final": [
+    "mem_00001[saved] preference.food.spice_level: ユーザーは辛い食べ物が苦手で、甘口を好む <- ['s19-t1']"
+   ]
+  }
+ ]
+}
